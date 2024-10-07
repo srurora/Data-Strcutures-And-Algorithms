@@ -12,7 +12,7 @@
 #  detect a loop in a Singly Linked List
 #  find start of a loop in a Singly Linked List？
 #  Why Floyd's Cycle Detection algorithm works？
-#  remove loop from a Singly Linked List？
+#  Remove loop from a Singly Linked List？
 #  Merge Two Sorted Lists Question
 #  LeetCode #2： Add Two Numbers
 
@@ -273,10 +273,64 @@ class SinglyLinkedList:
         print("No loop detected")
         return None
     
+    def removeLoop(self, curr):
+        startNode = self.head
+        prev = Node(None)
+        while startNode != curr:
+            startNode = startNode.next
+            prev = curr
+            curr = curr.next
+        prev.next = None
+    
     # remove loop from a Singly Linked List
+    def remove_loop_from_sll(self):
+        curr = self.head
+        fast = self.head
+        while fast and fast.next:
+            fast = fast.next.next
+            curr = curr.next
+            if fast == curr:
+                self.removeLoop(curr)
 
-
-
+    #  Merge Two Sorted Lists Question
+    def merge_two_sorted_LL(self, sll2):
+        start1 = self.head
+        start2 = sll2
+        dummy = Node(0)
+        prev = dummy
+        while start1 and start2:
+            if start1.data <= start2.data:
+                prev.next = start1
+                start1 = start1.next
+            else:
+                prev.next = start2
+                start2 = start2.next
+            prev = prev.next
+        if start2 == None:
+            prev.next = start1
+        else:
+            prev.next = start2
+        return dummy.next
+    
+    #  LeetCode #2： Add Two Numbers
+    def add_two_numbers(self, sll2):
+        head1 = self.head
+        head2 = sll2
+        dummy = Node(0)
+        prev = dummy
+        carry = 0
+        while head1 or head2:
+            x = head1.data if head1 else 0
+            y = head2.data if head2 else 0
+            addition = carry + x + y
+            carry = addition//10
+            prev.next = Node(addition % 10)
+            prev = prev.next
+            if head1: head1 = head1.next
+            if head2: head2 = head2.next
+        if carry>0:
+            prev.next = Node(carry)
+        return dummy.next
                
 class Node:
     def __init__(self, data):
@@ -286,6 +340,18 @@ class Node:
 
     
 if __name__ == "__main__":
+    sll4 = SinglyLinkedList()
+    sll4.add_node_at_last(1)
+    sll4.add_node_at_last(1)
+    sll4.add_node_at_last(9)
+
+    sll5 = SinglyLinkedList()
+    sll5.add_node_at_last(1)
+    sll5.add_node_at_last(1)
+    sll5.add_node_at_last(1)
+    sll5.add_node_at_last(1)
+
+
     sll3 = SinglyLinkedList()
     sll3.add_node_at_last(0)
     sll3.add_node_at_last(1)
@@ -296,7 +362,6 @@ if __name__ == "__main__":
 
     # Create a LinkedList object
     sll = SinglyLinkedList()
-
     sll2 = SinglyLinkedList()
 
     sll2.add_node_at_last(10)
@@ -392,5 +457,31 @@ if __name__ == "__main__":
     print("**********************************************")
     print("Finding start of the loop")
     sll3.find_start_of_a_loop()
+
+    print("**********************************************")
+    print("Remove the loop in the LL")
+    sll3.remove_loop_from_sll()
+    print("After Loop Removal")
+    sll3.print_nodes()
+
+    print("**********************************************")
+    print("Merge two sorted singly LL")
+    merged_list = SinglyLinkedList()
+    merged_list.head = sll2.merge_two_sorted_LL(sll3.head)
+    merged_list.print_nodes()
+
+    print("**********************************************")
+    print("Adding two numbers in singly LLs")
+    merged_list = SinglyLinkedList()
+    sll4.print_nodes()
+    sll5.print_nodes()
+    merged_list.head = sll4.add_two_numbers(sll5.head)
+    merged_list.print_nodes()
+
+    # ****************** End of Singly LLs **********************
+    
+    
+
+    
 
     
