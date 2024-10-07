@@ -23,6 +23,7 @@ print(stack.pop())
 print(stack.pop())
 
 # Next Greater Element
+#Time and Space complexity = O(n)
 def nextGreaterElementToRight(arr):
     result = [0]*len(arr)
     arr = arr[::-1]
@@ -44,6 +45,7 @@ print("Next greater element to te right:")
 print(ans)
 
 #Valid Parentheses problem (Balanced Brackets)
+#Time and Space complexity = O(n)
 def checkValidParanthesis(arr):
     stack = []
     matching = {')':'(',
