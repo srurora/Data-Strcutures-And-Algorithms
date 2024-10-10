@@ -101,17 +101,48 @@ def iterativeInOrder(node):
 #Iterative post-order using stack: left--right--node
 def iterativePostOrder(node):
     if not node: return
-    stack = []
-    while stack or node:
-        # Traverse to the rightmost node
-        while node:
-            stack.append(node)
-            node = node.left 
-        # Process the node     
-        node = stack.pop()
-        node = node.right
-        print(node.data, end=",")
+    stack = [node]
+    visited = [False]
+    result = []
+    while stack:
+        curr, v = stack.pop(), visited.pop()
+        if v:
+             result.append(curr.data)
+        else:
+             stack.append(curr)
+             visited.append(True)
+             if curr.right:
+                stack.append(curr.right)
+                visited.append(False)
+             if curr.left:
+                stack.append(curr.left)
+                visited.append(False)
+    print(result)
 
+def iterativeFindMax(root):
+     if not root: return
+     stack = [root]
+     maxU = float('-inf')
+     while stack:
+          curr = stack.pop()
+          maxU = max(maxU, curr.data)
+          if curr.right:
+               stack.append(curr.right)
+          if curr.left:
+               stack.append(curr.left)
+     print(maxU)
+
+def findMax(root):
+     if not root: return
+     maxU = root.data
+     left = float('-inf')
+     right = float('-inf')
+     if root.left:
+        left = findMax(root.left)
+     if root.right:
+        right = findMax(root.right)
+     return max(maxU, left, right)
+             
 if __name__ == "__main__":
     # Creating the tree
     root = Node(2)
@@ -136,6 +167,12 @@ if __name__ == "__main__":
     postOrder(root)
     print("\nIterative Post-order DFS: ", end=' ')
     iterativePostOrder(root)
+    print("\n-------------------------------------------")
+
+    print("\nRecursive - Find Max in BT: ", end=' ')
+    print(findMax(root))
+    print("\nIterative - Find Max in BT: ", end=' ')
+    iterativeFindMax(root)
     print("\n-------------------------------------------")
 
     
