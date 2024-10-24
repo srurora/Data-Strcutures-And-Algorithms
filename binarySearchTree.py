@@ -91,7 +91,26 @@ def searchRecursively(root, key):
         return searchRecursively(root.left, key)
     else:  # Otherwise, search in the right subtree
         return searchRecursively(root.right, key)
+    
+def findMax(root):
+    if not root: return float('-inf')
+    return max(root.data, findMax(root.left), findMax(root.right))
 
+def findMin(root):
+    if not root: return float('inf')
+    return min(root.data, findMin(root.left), findMin(root.right))
+
+def isValidBST(root):
+     if not root: return True
+     if not root.left and not root.right: return True
+     if root.left and findMax(root.left) > root.data: return False
+     if root.right and findMax(root.right) < root.data: return False
+     return True
+
+def isValidBST2(node, min_val, max_val):
+   if not node: return True
+   if node.data <= min_val or node.data >= max_val: return False
+   return isValidBST2(node.left, min_val, node.data) and isValidBST2(node.right, node.data, max_val)
 
 if __name__ == "__main__":
     # Creating the tree
@@ -123,3 +142,7 @@ if __name__ == "__main__":
     else:
         print(f"\nLooking for key {search_key} recursively - Not Found")
     print("\n-------------------------------------------")
+
+    print("Checking if BST is valid")
+    print(isValidBST(root))
+    print(isValidBST2(root, float('-inf'), float('inf')))

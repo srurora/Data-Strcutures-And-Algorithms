@@ -142,7 +142,24 @@ def findMax(root):
      if root.right:
         right = findMax(root.right)
      return max(maxU, left, right)
-             
+
+def insert(root, key):
+     if not root: 
+          newRoot = Node(key)
+          return newRoot
+     else:
+          if key < root.data: root.left = insert(root.left, key)
+          else: root.right = insert(root.right, key)
+     return root
+
+def search(root, key):
+     if not root or root.data == key: return root
+     if key < root.data:
+          return search(root.left, key)
+     else:
+          return search(root.right, key)
+
+           
 if __name__ == "__main__":
     # Creating the tree
     root = Node(2)
@@ -173,6 +190,19 @@ if __name__ == "__main__":
     print(findMax(root))
     print("\nIterative - Find Max in BT: ", end=' ')
     iterativeFindMax(root)
+    print("\n-------------------------------------------")
+
+    print("\nRecursive Insertion ", end=' ')
+    newRoot = insert(root, 11)
+    postOrder(newRoot)
+    print("\n-------------------------------------------")
+
+    print("\n Recursive search ", end=' ')
+    res = search(root, 11)
+    if res:
+        print(res.data, 'found')
+    else:
+      print('not found')
     print("\n-------------------------------------------")
 
     
