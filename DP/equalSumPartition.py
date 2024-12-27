@@ -37,6 +37,9 @@ def countNoOfSubsetsWithGivenSum(arr, target):
                 dp[i][j] = dp[i-1][j]
     return dp[n][target]
 
+
+
+
 arr1 = [1,2,3003,4]
 print(equalSumpartitionProblem(arr1, sum(arr1)))
 
