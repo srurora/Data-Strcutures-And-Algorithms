@@ -4,6 +4,7 @@
 
 # import dictionary for graph 
 from collections import defaultdict
+from collections import deque
 
 graph = defaultdict(list)
 
@@ -53,3 +54,60 @@ adj_matrix1 = create_adjacency_matrix(V1, edges1)
 for row in adj_matrix1:
     print(row)
 print()
+
+
+def DFS_recusrsive(graph, node, visited = None):
+    if visited is None: visited = set()
+    visited.add(node)
+    print(node, end = " ") #process the node
+
+    for neighbor in graph.get(node, []):
+        if neighbor not in visited:
+            DFS_recusrsive(graph, neighbor, visited)
+
+def DFS_iterative(graph, start):
+    visited = set()
+    stack = [start]
+    while stack:
+        node = stack.pop()
+        if node not in visited:
+            print(node, end = " ")
+            visited.add(node)
+            stack.extend(graph[node])
+
+def BFS(graph, start):
+    visited = set()
+    q = deque([start])
+    while q:
+        node = q.popleft()
+        if node not in visited:
+            print(node, end = " ")
+            visited.add(node)
+            q.extend(graph.get(node, []))
+
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D', 'E'],
+    'C': ['A', 'F', 'G'],
+    'D': ['B'],
+    'E': ['B', 'H'],
+    'F': ['C'],
+    'G': ['C'],
+    'H': ['E']
+}
+    #     A
+    #    / \
+    #   B   C
+    #  / \  / \
+    # D   E F  G
+    #    |
+    #    H
+
+print("DFS Recursive:")
+DFS_recusrsive(graph, 'A')
+print()
+print("DFS Iterative with Stack LIFO:")
+DFS_iterative(graph, 'A')
+print()
+print("BFS with Queue FIFO:")
+BFS(graph, 'A')

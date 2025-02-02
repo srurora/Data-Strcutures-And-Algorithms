@@ -97,6 +97,15 @@ def check_if_string_is_palindrome(palindrome):
         right -=1
     return True
 
+def canAttendMeetings(intervals):
+    n = len(intervals)
+    if n==1 or n==0: return True
+    for i in range(1,n):
+        start2, end2 = intervals[i][0], intervals[i][1]
+        start1, end1 = intervals[i-1][0], intervals[i-1][1]
+        if start2 < end1 and start2 > start1: return False
+    return True
+        
 # Main function
 def main():
     # Define array
@@ -105,6 +114,10 @@ def main():
     arr3 =[1,2,4,5,6,7,8,9]
     palindrome1 = "madam"
     palindrome2 = "sir"
+    intervals = [[0,30], [5,10], [15,20]]
+    intervals2 = [[5,8], [9,15]]
+    print("Can they attend?", canAttendMeetings(intervals))
+    print("Can they attend?", canAttendMeetings(intervals2))
 
     # Call the function to print the array
     print_array(arr)
